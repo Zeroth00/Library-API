@@ -3,11 +3,12 @@ using RestApiProje.ModelsDto;
 
 namespace RestApiProje.Context
 {
-    public class ClientsDbManager : DbContext
+    public class DbManager : DbContext
     {
-        public ClientsDbManager(DbContextOptions<ClientsDbManager> options) : base(options)
+        public DbManager(DbContextOptions<DbManager> options) : base(options)
         {
         }
+        public DbSet<BookModelDto> BooksDb { get; set; }
         public DbSet<ClientModelDto> ClientsDb { get; set; }
     }
 }

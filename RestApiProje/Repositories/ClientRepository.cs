@@ -5,20 +5,20 @@ namespace RestApiProje.Repositories
 {
     public class ClientRepository : IClientRepository
     {
-        private readonly ClientsDbManager _ClientsDbManager;
-        public ClientRepository(ClientsDbManager ClientsDbManager)
+        private readonly DbManager _DbManager;
+        public ClientRepository(DbManager ClientsDbManager)
         {
-            _ClientsDbManager = ClientsDbManager;
+            _DbManager = ClientsDbManager;
         }
 
         public IEnumerable<ClientModelDto> GetAll()
         {
-            return _ClientsDbManager.ClientsDb.ToList();
+            return _DbManager.ClientsDb.ToList();
         }
 
         public ClientModelDto GetById(long id)
         {
-            return _ClientsDbManager.ClientsDb.SingleOrDefault(x => x.Id == id);
+            return _DbManager.ClientsDb.SingleOrDefault(x => x.Id == id);
         }
 
         public void Create(CreateUpdateClientModelDto client)
@@ -32,26 +32,26 @@ namespace RestApiProje.Repositories
                 PhoneNumber = client.PhoneNumber
                 
             };
-            _ClientsDbManager.ClientsDb.Add(result);
-            _ClientsDbManager.SaveChanges();
+            _DbManager.ClientsDb.Add(result);
+            _DbManager.SaveChanges();
 
 
         }
         public void Delete(long id)
         {
-            _ClientsDbManager.ClientsDb.Remove(_ClientsDbManager.ClientsDb.FirstOrDefault(x => x.Id == id));
-            _ClientsDbManager.SaveChanges();
+            _DbManager.ClientsDb.Remove(_DbManager.ClientsDb.FirstOrDefault(x => x.Id == id));
+            _DbManager.SaveChanges();
 
         }
         public void Update(long id, CreateUpdateClientModelDto client)
         {
-            var result = _ClientsDbManager.ClientsDb.FirstOrDefault(x => x.Id == id);
+            var result = _DbManager.ClientsDb.FirstOrDefault(x => x.Id == id);
             result.FirstName = client.FirstName;
             result.LastName = client.LastName;
             result.Address = client.LastName;
             result.Email = client.Email;
             result.PhoneNumber = client.PhoneNumber;
-            _ClientsDbManager.SaveChanges();
+            _DbManager.SaveChanges();
         }
 
     }

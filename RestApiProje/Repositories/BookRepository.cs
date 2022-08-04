@@ -5,20 +5,20 @@ namespace RestApiProje.Repositories
 {
     public class BookRepository : IBookRepository
     {
-        private readonly BooksDbManager _BooksDbManager;
-        public BookRepository(BooksDbManager BooksDbManager)
+        private readonly DbManager _DbManager;
+        public BookRepository(DbManager dbManager)
         {
-            _BooksDbManager = BooksDbManager;
+            _DbManager = dbManager;
         }
 
         public IEnumerable<BookModelDto> GetAll()
         { 
-            return _BooksDbManager.BooksDb.ToList();
+            return _DbManager.BooksDb.ToList();
         }
 
         public BookModelDto GetById(long id)
         {
-            return _BooksDbManager.BooksDb.SingleOrDefault(x => x.Id==id);
+            return _DbManager.BooksDb.SingleOrDefault(x => x.Id==id);
         }
 
         public void Create(CreateUpdateBookModelDto book)
@@ -31,26 +31,26 @@ namespace RestApiProje.Repositories
                 HolderId = book.HolderId,
                 LastUpdateTime = DateTime.UtcNow
             };
-            _BooksDbManager.BooksDb.Add(result);
-            _BooksDbManager.SaveChanges();
+            _DbManager.BooksDb.Add(result);
+            _DbManager.SaveChanges();
 
 
         }
         public void Delete(long id)
         {
-            _BooksDbManager.BooksDb.Remove(_BooksDbManager.BooksDb.FirstOrDefault(x=>x.Id==id));
-            _BooksDbManager.SaveChanges();
+            _DbManager.BooksDb.Remove(_DbManager.BooksDb.FirstOrDefault(x=>x.Id==id));
+            _DbManager.SaveChanges();
 
         }
         public void Update(long id,CreateUpdateBookModelDto book)
         {
-            var result= _BooksDbManager.BooksDb.FirstOrDefault(x => x.Id == id);
+            var result= _DbManager.BooksDb.FirstOrDefault(x => x.Id == id);
             result.Name = book.Name;
             result.Genre = book.Genre;
             result.Author = book.Author;
             result.HolderId = book.HolderId;
             result.LastUpdateTime = DateTime.UtcNow;
-            _BooksDbManager.SaveChanges();
+            _DbManager.SaveChanges();
         }
 
     }
